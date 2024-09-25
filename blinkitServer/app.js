@@ -3,6 +3,7 @@ import "dotenv/config"; // Ensure dotenv is installed
 import { dbConnect } from './src/config/dbConnect.js';
 import { PORT } from './src/config/config.js';
 import { admin, buildAdminRouter } from './src/config/setup.js';
+import { registerRoutes } from './src/routes/index.js';
 
 const start = async () => {
   try {
@@ -16,11 +17,13 @@ const start = async () => {
     await dbConnect(mongoUri);
 
     const app = Fastify();
+    // Register routes
 
+    await registerRoutes(app);
     // Build AdminJS router
     await buildAdminRouter(app);
 
-    await app.listen({ port: PORT, host: "0.0.0.0" });
+    app.listen({ port: PORT, host: "0.0.0.0" });
     console.log(`Blinkit listening at http://localhost:${PORT}${admin.options.rootPath}`);
 
   } catch (err) {

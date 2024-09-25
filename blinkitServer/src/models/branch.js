@@ -5,7 +5,7 @@ const branchSchema = new Schema({
     type: String,
     required: true
   },
-  liveLocation: {
+  location: {
     latitude: { type: Number },
     longitude: { type: Number }
   },

@@ -1,4 +1,5 @@
 import { Schema, model } from 'mongoose'
+import Counter from './counter.js';
 
 const orderSchema = new Schema({
   orderId: { type: String, unique: true },
@@ -27,7 +28,7 @@ const orderSchema = new Schema({
     longitude: { type: Number },
     address: { type: String }
   },
-  staus: {
+  status: {
     type: String,
     enum: ["available", "confirmed", "arriving", "delivered", "cancelled"],
     default: "available"
