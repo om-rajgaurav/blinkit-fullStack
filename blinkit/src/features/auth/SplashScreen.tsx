@@ -1,9 +1,11 @@
 import React, {useEffect} from 'react';
-import {StyleSheet,View, Image, Alert} from 'react-native';
+import {StyleSheet, View, Image, Alert} from 'react-native';
 import {Colors} from '@utils/Constants';
 import Logo from '@assets/images/splash_logo.jpeg';
 import {screenHeight, screenWidth} from '@utils/Scaling';
 import GeoLocation from '@react-native-community/geolocation';
+import {useAuthStore} from '@state/authStore';
+import { tokenStorage } from '@state/storage';
 
 GeoLocation.setRNConfiguration({
   skipPermissionRequests: false,
@@ -12,7 +14,18 @@ GeoLocation.setRNConfiguration({
   locationProvider: 'auto',
 });
 
+
+const tokenCheck = async () => {
+    const access_token = tokenStorage.getString("access_token") as string;
+    const refresh_token = tokenStorage.getString("refresh_token") as string;
+    if (access_token && refresh_token) {
+      return true
+    }
+    return false
+}
+
 const SplashScreen: React.FC = () => {
+  const {user, setUser} = useAuthStore();
   const fetchUserLocation = async (): Promise<void> => {
     try {
       const status = await GeoLocation.requestAuthorization();
