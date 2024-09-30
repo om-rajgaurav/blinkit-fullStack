@@ -1,19 +1,23 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import {StyleSheet, Text, View} from 'react-native';
+import React from 'react';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {NavigationContainer} from '@react-navigation/native';
+import SplashScreen from '@features/auth/SplashScreen';
+
+const stack = createNativeStackNavigator();
 
 const Navigation = () => {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text style={styles.text}>Navigation</Text>
-    </View>
-  )
-}
+    <NavigationContainer>
+      <stack.Navigator
+        initialRouteName="SplashScreen"
+        screenOptions={{headerShown: false}}>
+        <stack.Screen name="SplashScreen" component={SplashScreen} />
+      </stack.Navigator>
+    </NavigationContainer>
+  );
+};
 
-export default Navigation
+export default Navigation;
 
-const styles = StyleSheet.create({
-  text:{
-    fontFamily: 'Okra-ExtraBold',
-    fontSize: 40
-  }
-})
+
